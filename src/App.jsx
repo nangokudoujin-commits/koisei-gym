@@ -4,6 +4,7 @@ import onibutaImg from './assets/onibuta.png';
 import soraImg from './assets/空.png';
 import titleImg from './assets/タイトル.png';
 import bg1Img from './assets/背景1.png';
+import bg2Img from './assets/背景2.png';
 import { anchorQuestions } from './シングル向けの質問/anchor';
 import { step1Questions } from './シングル向けの質問/step1';
 import { step2Questions } from './シングル向けの質問/step2';
@@ -14,10 +15,10 @@ import { buildResult } from './シングル向けの質問/resultLogic';
 function ProgressBar({ percent }) {
   return (
     <div style={{ marginBottom: "20px" }}>
-      <div style={{ background: "rgba(255,255,255,0.1)", borderRadius: "10px", height: "6px", marginBottom: "6px" }}>
+      <div style={{ background: "rgba(0,0,0,0.12)", borderRadius: "10px", height: "6px", marginBottom: "6px" }}>
         <div style={{ background: "linear-gradient(90deg, #ff6b9d, #ff9a3c)", height: "100%", borderRadius: "10px", width: percent + "%", transition: "width 0.4s" }} />
       </div>
-      <p style={{ textAlign: "right", fontSize: "12px", color: "#aaa" }}>{percent}%</p>
+      <p style={{ textAlign: "right", fontSize: "12px", color: "#666" }}>{percent}%</p>
     </div>
   );
 }
@@ -474,33 +475,33 @@ export default function App() {
 }
 
 var styles = {
-  container:     { minHeight: "100vh", background: "linear-gradient(135deg, #1a0a2e 0%, #2d1b69 50%, #1a0a2e 100%)", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px", fontFamily: "sans-serif" },
-  card:          { background: "rgba(255,255,255,0.05)", backdropFilter: "blur(10px)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "20px", padding: "32px", maxWidth: "600px", width: "100%", color: "white" },
+  container:     { minHeight: "100vh", backgroundImage: `url(${bg2Img})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "repeat", backgroundAttachment: "fixed", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px", fontFamily: "sans-serif" },
+  card:          { background: "rgba(255,255,255,0.88)", backdropFilter: "blur(4px)", border: "1px solid rgba(255,182,193,0.6)", borderRadius: "20px", padding: "32px", maxWidth: "600px", width: "100%", color: "#222" },
   header:        { textAlign: "center", marginBottom: "16px" },
   pigIcon:       { fontSize: "48px", marginBottom: "8px" },
-  appTitle:      { fontSize: "18px", fontWeight: "bold", color: "#ff6b9d", marginBottom: "6px" },
-  subtitle:      { fontSize: "12px", color: "#ccc", lineHeight: "1.6" },
-  infoBox:       { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,107,157,0.3)", borderRadius: "12px", padding: "20px", marginBottom: "20px" },
-  infoTitle:     { fontSize: "14px", fontWeight: "bold", color: "#ff9a3c", marginBottom: "12px" },
-  infoText:      { fontSize: "13px", lineHeight: "1.8", color: "#ddd", marginBottom: "10px" },
-  infoNote:      { fontSize: "11px", color: "#aaa", lineHeight: "1.6", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "10px", marginTop: "6px" },
+  appTitle:      { fontSize: "18px", fontWeight: "bold", color: "#c0304a", marginBottom: "6px" },
+  subtitle:      { fontSize: "12px", color: "#555", lineHeight: "1.6" },
+  infoBox:       { background: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,107,157,0.4)", borderRadius: "12px", padding: "20px", marginBottom: "20px" },
+  infoTitle:     { fontSize: "14px", fontWeight: "bold", color: "#c0304a", marginBottom: "12px" },
+  infoText:      { fontSize: "13px", lineHeight: "1.8", color: "#333", marginBottom: "10px" },
+  infoNote:      { fontSize: "11px", color: "#666", lineHeight: "1.6", borderTop: "1px solid rgba(0,0,0,0.1)", paddingTop: "10px", marginTop: "6px" },
   primaryBtn:    { width: "100%", padding: "14px", background: "linear-gradient(90deg, #ff6b9d, #ff9a3c)", border: "none", borderRadius: "10px", color: "white", fontSize: "15px", fontWeight: "bold", cursor: "pointer" },
-  stepLabel:     { fontSize: "12px", color: "#ff9a3c", fontWeight: "bold", marginBottom: "8px" },
-  questionText:  { fontSize: "15px", lineHeight: "1.7", marginBottom: "20px", fontWeight: "bold" },
+  stepLabel:     { fontSize: "12px", color: "#c0304a", fontWeight: "bold", marginBottom: "8px" },
+  questionText:  { fontSize: "15px", lineHeight: "1.7", marginBottom: "20px", fontWeight: "bold", color: "#222" },
   options:       { display: "flex", flexDirection: "column", gap: "8px", marginBottom: "20px" },
-  optionBtn:     { background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "10px", padding: "11px 14px", color: "white", cursor: "pointer", textAlign: "left", fontSize: "13px" },
-  optionSelected:{ background: "rgba(255,107,157,0.3)", border: "1px solid #ff6b9d" },
+  optionBtn:     { background: "rgba(255,255,255,0.9)", border: "1px solid rgba(255,107,157,0.4)", borderRadius: "10px", padding: "11px 14px", color: "#333", cursor: "pointer", textAlign: "left", fontSize: "13px" },
+  optionSelected:{ background: "rgba(255,107,157,0.25)", border: "1px solid #ff6b9d", color: "#333" },
   scaleWrap:     { marginBottom: "20px" },
-  scaleLabels:   { display: "flex", justifyContent: "space-between", fontSize: "10px", color: "#aaa", marginBottom: "10px" },
+  scaleLabels:   { display: "flex", justifyContent: "space-between", fontSize: "10px", color: "#666", marginBottom: "10px" },
   scaleBtns:     { display: "flex", gap: "8px", justifyContent: "center" },
-  scaleBtn:      { width: "48px", height: "48px", borderRadius: "50%", border: "2px solid rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.05)", color: "white", fontSize: "16px", cursor: "pointer" },
-  scaleBtnOn:    { background: "rgba(255,107,157,0.5)", border: "2px solid #ff6b9d" },
+  scaleBtn:      { width: "48px", height: "48px", borderRadius: "50%", border: "2px solid rgba(255,107,157,0.4)", background: "rgba(255,255,255,0.9)", color: "#333", fontSize: "16px", cursor: "pointer" },
+  scaleBtnOn:    { background: "rgba(255,107,157,0.3)", border: "2px solid #ff6b9d", color: "#333" },
   btnRow:        { display: "flex", gap: "10px", alignItems: "center", marginTop: "8px" },
-  backBtn:       { padding: "12px 18px", background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "10px", color: "white", fontSize: "13px", cursor: "pointer" },
+  backBtn:       { padding: "12px 18px", background: "rgba(255,255,255,0.8)", border: "1px solid rgba(255,107,157,0.4)", borderRadius: "10px", color: "#555", fontSize: "13px", cursor: "pointer" },
   nextBtn:       { padding: "13px", background: "linear-gradient(90deg, #ff6b9d, #ff9a3c)", border: "none", borderRadius: "10px", color: "white", fontSize: "15px", fontWeight: "bold", cursor: "pointer" },
   disabledBtn:   { opacity: 0.4, cursor: "not-allowed" },
   centerBlock:   { textAlign: "center", padding: "10px 0" },
   bigEmoji:      { fontSize: "64px", marginBottom: "16px" },
-  doneTitle:     { color: "#ff6b9d", fontSize: "20px", marginBottom: "12px" },
-  doneText:      { fontSize: "14px", lineHeight: "1.8", color: "#ccc", marginBottom: "16px" },
+  doneTitle:     { color: "#c0304a", fontSize: "20px", marginBottom: "12px" },
+  doneText:      { fontSize: "14px", lineHeight: "1.8", color: "#444", marginBottom: "16px" },
 };
