@@ -1,21 +1,23 @@
-/* レスポンシブ対応 */
+/* html・bodyの背景色と余白リセット */
+html, body {
+  background-color: #000;
+  margin: 0;
+  padding: 0;
+}
 
-/* 全画像のサイズ調整 */
+/* 全画像のレスポンシブ対応 */
 img {
   max-width: 100%;
   height: auto;
-}
-
-/* 小さい画面（375px以下）のフォントサイズ */
-@media (max-width: 375px) {
-  body {
-    font-size: 14px;
-  }
+  display: block;
 }
 
 /* 診断スタートボタン */
 .start-button {
-  width: 80%;
+  width: 85%;
+  max-width: 400px;
+  margin: 16px auto;
+  display: block;
   padding: 18px;
   background: #e74c3c;
   color: white;
@@ -25,10 +27,13 @@ img {
   border-radius: 8px;
   cursor: pointer;
   box-shadow: 0 4px 16px rgba(231, 76, 60, 0.6);
-  white-space: nowrap;
 }
 
+/* iPhoneSE（375px以下）の調整 */
 @media (max-width: 375px) {
+  body {
+    font-size: 14px;
+  }
   .start-button {
     font-size: 1.1rem;
     padding: 12px 20px;

@@ -158,34 +158,18 @@ export default function App() {
   // START
   if (screen === 'start') {
     return (
-      <div style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "flex-start",
-        fontFamily: "sans-serif",
-        background: "transparent",
-      }}>
-        {/* 背景1.png + ボタンを重ねるコンテナ */}
-        <div style={{ position: "relative", width: "100%" }}>
-          <img src={bg1Img} alt="背景"
-            style={{ width: "100%", height: "auto", display: "block" }} />
+      <div style={{ background: "#000", margin: 0, padding: 0 }}>
+        {/* 背景1.png：画面幅いっぱい・縦横比保持 */}
+        <img src={bg1Img} alt="背景"
+          style={{ width: "100%", height: "auto", display: "block" }} />
 
-          {/* スタートボタン：背景画像の下部に重ねる */}
-          <div style={{
-            position: "absolute",
-            bottom: "15%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            width: "80%",
-          }}>
-            <button
-              className="start-button"
-              onClick={() => { setCurrentQ(0); setScreen('anchor'); }}>
-              診断スタート
-            </button>
-          </div>
+        {/* 診断スタートボタン：画像の直下 */}
+        <div style={{ display: "flex", justifyContent: "center", padding: "16px 0 32px" }}>
+          <button
+            className="start-button"
+            onClick={() => { setCurrentQ(0); setScreen('anchor'); }}>
+            診断スタート
+          </button>
         </div>
       </div>
     );
