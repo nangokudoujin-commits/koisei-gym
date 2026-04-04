@@ -475,7 +475,7 @@ export default function App() {
 }
 
 var styles = {
-  container:     { minHeight: "100vh", backgroundImage: `url(${bg2Img})`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "repeat", backgroundAttachment: "fixed", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px", fontFamily: "sans-serif" },
+  container:     { minHeight: "100vh", backgroundImage: `url(${bg2Img})`, backgroundSize: "50%", backgroundPosition: "center", backgroundRepeat: "repeat", backgroundAttachment: "fixed", display: "flex", alignItems: "center", justifyContent: "center", padding: "20px", fontFamily: "sans-serif" },
   card:          { background: "rgba(255,255,255,0.88)", backdropFilter: "blur(4px)", border: "1px solid rgba(255,182,193,0.6)", borderRadius: "20px", padding: "32px", maxWidth: "600px", width: "100%", color: "#222" },
   header:        { textAlign: "center", marginBottom: "16px" },
   pigIcon:       { fontSize: "48px", marginBottom: "8px" },
