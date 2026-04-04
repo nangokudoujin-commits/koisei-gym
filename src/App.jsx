@@ -1,4 +1,5 @@
 import { useState } from "react";
+import './App.css';
 import onibutaImg from './assets/onibuta.png';
 import soraImg from './assets/空.png';
 import titleImg from './assets/タイトル.png';
@@ -180,24 +181,12 @@ export default function App() {
             width: "80%",
           }}>
             <button
-              onClick={() => { setCurrentQ(0); setScreen('anchor'); }}
-              style={{
-                width: "100%",
-                padding: "18px",
-                background: "#e74c3c",
-                color: "white",
-                fontWeight: "bold",
-                fontSize: "1.4rem",
-                border: "none",
-                borderRadius: "8px",
-                cursor: "pointer",
-                boxShadow: "0 4px 16px rgba(231,76,60,0.6)",
-                whiteSpace: "nowrap",
-              }}>
+              className="start-button"
+              onClick={() => { setCurrentQ(0); setScreen('anchor'); }}>
               診断スタート
             </button>
           </div>
-78/        </div>
+        </div>
       </div>
     );
   }
