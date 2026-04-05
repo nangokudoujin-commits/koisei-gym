@@ -358,20 +358,41 @@ export default function App() {
         <div style={styles.card}>
           <ProgressBar percent={100} />
 
-          {/* ① タイプ名（nickname） */}
+          {/* タイプ情報エリア */}
           <div style={styles.centerBlock}>
             <div style={styles.bigEmoji}>
               <img src={onibutaImg} alt="鬼豚コーチ" style={{ width: "160px", height: "160px", objectFit: "contain", mixBlendMode: "multiply", background: "transparent" }} />
               🎊
             </div>
             <p style={{ fontSize: "12px", color: "#aaa", marginBottom: "4px" }}>あなたの恋クセタイプ</p>
-            <h2 style={{ ...styles.doneTitle, fontSize: "26px", marginBottom: "6px" }}>{result.nickname}</h2>
-            <p style={{ fontSize: "13px", color: "#bbb", marginBottom: "4px" }}>（{result.typeName}）</p>
 
-            {/* ② MAPエリア */}
+            {/* ① タイプ名（nickname） */}
+            <h2 style={{ ...styles.doneTitle, fontSize: "26px", marginBottom: "4px" }}>{result.nickname}</h2>
+
+            {/* ② 公式名（officialName） */}
+            {result.officialName && (
+              <p style={{ fontSize: "12px", color: "#888", marginBottom: "8px" }}>（{result.officialName}）</p>
+            )}
+
+            {/* ③ バグ名（bugName） */}
+            {result.bugName && (
+              <p style={{ fontSize: "0.9rem", color: "#c0304a", marginBottom: "10px", fontWeight: "bold" }}>
+                👾 {result.bugName}
+              </p>
+            )}
+
+            {/* ④ 取扱注意（warning） */}
+            {result.warning && (
+              <div style={{ background: "#fff9e6", border: "1px solid #f39c12", borderRadius: "8px", padding: "10px 14px", marginBottom: "12px", textAlign: "center" }}>
+                <p style={{ fontSize: "11px", color: "#c0392b", fontWeight: "bold", marginBottom: "4px" }}>⚠️ 取扱注意</p>
+                <p style={{ fontSize: "0.85rem", color: "#333", lineHeight: "1.7", margin: 0 }}>{result.warning}</p>
+              </div>
+            )}
+
+            {/* ⑤ MAPエリア */}
             <p style={{ fontSize: "13px", color: "#ff9a3c", marginBottom: "16px" }}>📍 {result.mapLabel}</p>
 
-            {/* 自爆危険度メーター */}
+            {/* ⑥ 自爆危険度メーター */}
             <div style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${zoneColor}`, borderRadius: "10px", padding: "10px 16px", marginBottom: "20px", display: "inline-block" }}>
               <span style={{ color: zoneColor, fontWeight: "bold", fontSize: "15px" }}>
                 ⚠️ {zoneLabel}（{result.totalScore}点）
