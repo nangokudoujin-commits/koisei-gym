@@ -23,6 +23,145 @@ function ProgressBar({ percent }) {
   );
 }
 
+// レーダーチャートコンポーネント
+function RadarChart({ scores }) {
+  const types = ["A","B","C","D","E","F","G"];
+  const labels = { A:"回避", B:"不安", C:"適応", D:"刺激", E:"完璧", F:"救済", G:"融合" };
+  const getColor = (score) => score >= 12 ? "#e74c3c" : score >= 7 ? "#f39c12" : "#27ae60";
+  const getLevel = (score) => score >= 12 ? "HIGH" : score >= 7 ? "MID" : "LOW";
+
+  const cx = 150, cy = 150, r = 100;
+  const angleStep = (2 * Math.PI) / 7;
+
+  const points = types.map((t, i) => {
+    const angle = -Math.PI / 2 + i * angleStep;
+    const score = scores[t] || 3;
+    const ratio = (score - 3) / 12;
+    const pr = r * ratio;
+    return {
+      x: cx + pr * Math.cos(angle),
+      y: cy + pr * Math.sin(angle),
+      lx: cx + (r + 20) * Math.cos(angle),
+      ly: cy + (r + 20) * Math.sin(angle),
+      score,
+      label: labels[t],
+      color: getColor(score),
+      type: t,
+    };
+  });
+
+  const polyPoints = points.map(p => `${p.x},${p.y}`).join(" ");
+
+  // グリッドライン（3段階）
+  const gridLevels = [0.33, 0.66, 1.0];
+
+  return (
+    <div style={{ textAlign: "center", marginBottom: "16px" }}>
+      <p style={{ fontSize: "14px", fontWeight: "bold", color: "#c0304a", marginBottom: "8px" }}>📊 恋クセレーダー</p>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <svg width="300" height="300" viewBox="0 0 300 300">
+          {/* グリッド */}
+          {gridLevels.map((lv, gi) => {
+            const gpts = types.map((t, i) => {
+              const angle = -Math.PI / 2 + i * angleStep;
+              return `${cx + r * lv * Math.cos(angle)},${cy + r * lv * Math.sin(angle)}`;
+            }).join(" ");
+            return <polygon key={gi} points={gpts} fill="none" stroke="rgba(0,0,0,0.15)" strokeWidth="1" />;
+          })}
+          {/* 軸線 */}
+          {points.map((p, i) => {
+            const angle = -Math.PI / 2 + i * angleStep;
+            return <line key={i} x1={cx} y1={cy} x2={cx + r * Math.cos(angle)} y2={cy + r * Math.sin(angle)} stroke="rgba(0,0,0,0.15)" strokeWidth="1" />;
+          })}
+          {/* データポリゴン */}
+          <polygon points={polyPoints} fill="rgba(192,48,74,0.25)" stroke="#c0304a" strokeWidth="2" />
+          {/* 各頂点の色付き円 */}
+          {points.map((p, i) => (
+            <circle key={i} cx={p.x} cy={p.y} r="5" fill={p.color} stroke="white" strokeWidth="1.5" />
+          ))}
+          {/* ラベル */}
+          {points.map((p, i) => (
+            <text key={i} x={p.lx} y={p.ly} textAnchor="middle" dominantBaseline="middle"
+              fontSize="11" fontWeight="bold" fill={p.color}>
+              {p.label}
+            </text>
+          ))}
+        </svg>
+      </div>
+      {/* 凡例 */}
+      <div style={{ display: "flex", justifyContent: "center", gap: "12px", fontSize: "0.8rem", marginTop: "8px", flexWrap: "wrap" }}>
+        <span style={{ color: "#e74c3c" }}>🔴 HIGH（12〜15点）自爆警戒</span>
+        <span style={{ color: "#f39c12" }}>🟡 MID（7〜11点）要注意</span>
+        <span style={{ color: "#27ae60" }}>🟢 LOW（3〜6点）安全圏</span>
+      </div>
+    </div>
+  );
+}
+
+// 自爆MAPコンポーネント
+function SelfDestructMap({ mapAreaKey, mapLabel }) {
+  const areas = {
+    TOP_LEFT:     { x: 10,  y: 10,  w: 125, h: 125, color: "#ff6b6b", name: "灼熱のテーマパーク" },
+    BOTTOM_LEFT:  { x: 10,  y: 145, w: 125, h: 125, color: "#4a90d9", name: "底なしの深海沼" },
+    TOP_RIGHT:    { x: 145, y: 10,  w: 125, h: 125, color: "#74b9ff", name: "絶対零度の天空城" },
+    BOTTOM_RIGHT: { x: 145, y: 145, w: 125, h: 125, color: "#b2bec3", name: "無菌室の独房" },
+    CENTER:       { x: 110, y: 110, w: 60,  h: 60,  color: "#55efc4", name: "安全地帯" },
+    LEFT_BORDER:  { x: 10,  y: 110, w: 125, h: 60,  color: "#fd9644", name: "沸騰する水際" },
+    BLACKHOLE:    { x: 110, y: 10,  w: 60,  h: 60,  color: "#6c5ce7", name: "ブラックホール" },
+  };
+
+  const markerPos = {
+    TOP_LEFT:     { x: 72,  y: 72  },
+    BOTTOM_LEFT:  { x: 72,  y: 207 },
+    TOP_RIGHT:    { x: 207, y: 72  },
+    BOTTOM_RIGHT: { x: 207, y: 207 },
+    CENTER:       { x: 140, y: 140 },
+    LEFT_BORDER:  { x: 72,  y: 140 },
+    BLACKHOLE:    { x: 140, y: 40  },
+  };
+
+  const marker = markerPos[mapAreaKey] || { x: 140, y: 140 };
+  const areaInfo = areas[mapAreaKey] || areas.CENTER;
+
+  return (
+    <div style={{ textAlign: "center", marginBottom: "20px" }}>
+      <p style={{ fontSize: "14px", fontWeight: "bold", color: "#c0304a", marginBottom: "8px" }}>🗺️ 恋の自爆MAP</p>
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        <svg width="280" height="280" viewBox="0 0 280 280">
+          {/* 軸ラベル */}
+          <text x="140" y="8" textAnchor="middle" fontSize="9" fill="#666">能動（求める）</text>
+          <text x="140" y="276" textAnchor="middle" fontSize="9" fill="#666">受動（待つ）</text>
+          <text x="4" y="143" textAnchor="start" fontSize="9" fill="#666">融合</text>
+          <text x="240" y="143" textAnchor="start" fontSize="9" fill="#666">防衛</text>
+          {/* エリア */}
+          {Object.entries(areas).map(([key, a]) => (
+            <rect key={key} x={a.x} y={a.y} width={a.w} height={a.h}
+              fill={a.color} opacity="0.7" rx="4"
+              stroke={mapAreaKey === key ? "#333" : "white"} strokeWidth={mapAreaKey === key ? 2 : 0.5} />
+          ))}
+          {/* エリア名テキスト */}
+          {Object.entries(areas).map(([key, a]) => (
+            <text key={key} x={a.x + a.w/2} y={a.y + a.h/2} textAnchor="middle"
+              dominantBaseline="middle" fontSize="8" fill="white" fontWeight="bold"
+              style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.8)" }}>
+              {a.name.length > 8 ? a.name.slice(0, 8) : a.name}
+            </text>
+          ))}
+          {/* マーカー */}
+          <circle cx={marker.x} cy={marker.y} r="10" fill="#fff" stroke="#c0304a" strokeWidth="2" opacity="0.9" />
+          <text x={marker.x} y={marker.y} textAnchor="middle" dominantBaseline="middle" fontSize="10">📍</text>
+        </svg>
+      </div>
+      {/* エリア説明 */}
+      <div style={{ background: "rgba(255,255,255,0.7)", border: `1px solid ${areaInfo.color}`, borderRadius: "8px", padding: "8px 12px", margin: "8px auto", maxWidth: "280px" }}>
+        <p style={{ fontSize: "0.8rem", color: "#333", margin: 0 }}>
+          📍 あなたのエリア：<strong>{mapLabel}</strong>
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function MidMessage({ message, onContinue }) {
   return (
     <div style={styles.container}>
@@ -399,6 +538,12 @@ export default function App() {
               </span>
             </div>
           </div>
+
+          {/* レーダーチャート */}
+          <RadarChart scores={result.scores} />
+
+          {/* 自爆MAP */}
+          <SelfDestructMap mapAreaKey={result.mapAreaKey} mapLabel={result.mapLabel} />
 
           {/* ③ 鬼豚コーチのセリフ */}
           <div style={{ ...styles.infoBox, marginBottom: "16px" }}>

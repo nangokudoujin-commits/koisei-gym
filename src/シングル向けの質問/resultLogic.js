@@ -5,7 +5,7 @@ import { SINGLE_TYPES } from "./typeDefinitions.js";
 
 // 【1】診断結果オブジェクトを組み立てる
 export function buildResult(judgeResult, safetyTriggers, step2Answers) {
-  const { mainType, totalScore, zone } = judgeResult;
+  const { mainType, totalScore, zone, highTypes, scores } = judgeResult;
   const {
     needsFollowB,
     needsFollowC,
@@ -55,6 +55,7 @@ export function buildResult(judgeResult, safetyTriggers, step2Answers) {
     coreText:     typeDef.coreText,
     zone,
     totalScore,
+    scores:       scores || {},
     coachAccept:  typeDef.coachAccept  || "",
     coachCut:     typeDef.coachCut     || "",
     coachAction:  typeDef.coachAction  || "",

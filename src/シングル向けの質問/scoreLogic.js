@@ -55,7 +55,7 @@ export function judgeMainType(typeScores) {
     mainType = top2.join("");
   }
 
-  return { highTypes, mainType, totalScore, zone };
+  return { highTypes, mainType, totalScore, zone, scores: typeScores };
 }
 
 // 【4】安全網トリガーの判定
