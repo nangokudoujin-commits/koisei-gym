@@ -105,7 +105,7 @@ function SelfDestructMap({ mapAreaKey, mapLabel }) {
     BOTTOM_LEFT:  { x: 10,  y: 145, w: 125, h: 125, color: "#4a90d9", name: "底なしの深海沼" },
     TOP_RIGHT:    { x: 145, y: 10,  w: 125, h: 125, color: "#74b9ff", name: "絶対零度の天空城" },
     BOTTOM_RIGHT: { x: 145, y: 145, w: 125, h: 125, color: "#b2bec3", name: "無菌室の独房" },
-    CENTER:       { x: 110, y: 110, w: 60,  h: 60,  color: "#55efc4", name: "安全地帯" },
+    CENTER:       { x: 110, y: 110, w: 60,  h: 60,  color: "#55efc4", name: "セキュア型" },
     LEFT_BORDER:  { x: 10,  y: 110, w: 125, h: 60,  color: "#fd9644", name: "沸騰する水際" },
     BLACKHOLE:    { x: 110, y: 10,  w: 60,  h: 60,  color: "#6c5ce7", name: "ブラックホール" },
   };

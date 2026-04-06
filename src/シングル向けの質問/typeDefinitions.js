@@ -299,7 +299,7 @@ export const SINGLE_TYPES = {
     name: "自然体型",
     nickname: "自然体型",
     mapArea: "MAP中央",
-    mapLabel: "MAP中央（安全地帯）",
+    mapLabel: "MAP中央（セキュア型）",
     mapAreaKey: "CENTER",
     coreText: "素直に自然に愛せる",
     coachAccept: `お前の脳内には、相手の感情の暴走を無効化する『超高性能な感情スタビライザー（安定化装置）』が標準装備されているな。バグだらけのこの恋愛市場で、突出した自爆スイッチを持たない、恐ろしく希少なレアキャラだブー。\n\n感情をコントロールして、パニックにならずに相手の話を落ち着いて聞ける。喧嘩になっても一方的に逃げ出したりせず、正面から話し合いで関係を修復しようとする。これだけ圧倒的なバランス感覚を自然に持っているお前は、めちゃくちゃ希少で価値のある存在だブー。`,
@@ -317,7 +317,7 @@ export const SINGLE_TYPES = {
     name: "穏やかだが受け身型",
     nickname: "",
     mapArea: "MAP中央",
-    mapLabel: "MAP中央（安全地帯）",
+    mapLabel: "MAP中央（セキュア型）",
     mapAreaKey: "CENTER",
     coreText: "クセは少ない。でも自分から動けているか？",
     coachAccept: "",
@@ -358,7 +358,7 @@ export const MAP_AREAS = {
     core: "近づきたいのに逃げたい。MAPの中心で嵐を起こしている"
   },
   CENTER: {
-    name: "安全地帯",
+    name: "セキュア型",
     axis: "中央",
     core: "どのエリアにも属さず、柔軟に動ける"
   }
