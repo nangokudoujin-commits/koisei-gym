@@ -283,16 +283,16 @@ export default function App() {
   function calcPercent() {
     if (screen === 'start') return 0;
     if (screen === 'anchor') return Math.round((currentQ / totalQ) * 100);
-    if (screen === 'step1' || screen === 'step1_mid') {
+    if (screen === 'step1') {
       return Math.round(((anchorQuestions.length + currentQ) / totalQ) * 100);
     }
-    if (screen === 'step2_intro' || screen === 'step2') {
+    if (screen === 'step2') {
       const base = anchorQuestions.length + step1Questions.length;
-      return Math.round(((base + (screen === 'step2_intro' ? 0 : currentQ)) / totalQ) * 100);
+      return Math.round(((base + currentQ) / totalQ) * 100);
     }
-    if (screen === 'step3_intro' || screen === 'step3') {
+    if (screen === 'step3') {
       const base = anchorQuestions.length + step1Questions.length + step2Questions.length;
-      return Math.round(((base + (screen === 'step3_intro' ? 0 : currentQ)) / totalQ) * 100);
+      return Math.round(((base + currentQ) / totalQ) * 100);
     }
     return 100;
   }
@@ -312,12 +312,9 @@ export default function App() {
     const newAnswers = { ...answers, [id]: value };
     setAnswers(newAnswers);
     const next = currentQ + 1;
-    if (next === 10 || next === 20) {
-      setCurrentQ(next);
-      setScreen('step1_mid');
-    } else if (next >= step1Questions.length) {
+    if (next >= step1Questions.length) {
       setCurrentQ(0);
-      setScreen('step2_intro');
+      setScreen('step2');
     } else {
       setCurrentQ(next);
     }
@@ -329,7 +326,7 @@ export default function App() {
     const next = currentQ + 1;
     if (next >= step2Questions.length) {
       setCurrentQ(0);
-      setScreen('step3_intro');
+      setScreen('step3');
     } else {
       setCurrentQ(next);
     }
@@ -491,12 +488,6 @@ export default function App() {
     );
   }
 
-  // STEP1 中間メッセージ
-  if (screen === 'step1_mid') {
-    const msg = currentQ === 10 ? "折り返しだブー。正直に答えてるか？ブー" : "もう少しだブー。最後まで付き合えブー";
-    return <MidMessage message={msg} onContinue={() => setScreen('step1')} />;
-  }
-
   // STEP1
   if (screen === 'step1') {
     const q = step1Questions[currentQ];
@@ -533,19 +524,6 @@ export default function App() {
     );
   }
 
-  // STEP2 イントロ
-  if (screen === 'step2_intro') {
-    return (
-      <IntroScreen
-        emoji="🧠"
-        title="STEP2 スタートだブー！"
-        message="次はお前のコミュニケーションのOSを見るブー。直感で答えろブー！"
-        onNext={() => { setCurrentQ(0); setScreen('step2'); }}
-        onBack={() => { setCurrentQ(step1Questions.length - 1); setScreen('step1'); }}
-      />
-    );
-  }
-
   // STEP2
   if (screen === 'step2') {
     const q = step2Questions[currentQ];
@@ -573,23 +551,10 @@ export default function App() {
             ))}
           </div>
           <div style={styles.btnRow}>
-            <button style={styles.backBtn} onClick={() => { if (currentQ > 0) { setCurrentQ(currentQ - 1); } else { setScreen('step2_intro'); } }}>← 戻る</button>
+            <button style={styles.backBtn} onClick={() => { if (currentQ > 0) { setCurrentQ(currentQ - 1); } else { setCurrentQ(step1Questions.length - 1); setScreen('step1'); } }}>← 戻る</button>
           </div>
         </div>
       </div>
-    );
-  }
-
-  // STEP3 イントロ
-  if (screen === 'step3_intro') {
-    return (
-      <IntroScreen
-        emoji="⚡"
-        title="最後だブー！"
-        message="バグが起きたときのお前を見るブー。正直に答えろブー！"
-        onNext={() => { setCurrentQ(0); setS3Buffer([]); setScreen('step3'); }}
-        onBack={() => { setCurrentQ(step2Questions.length - 1); setScreen('step2'); }}
-      />
     );
   }
 
@@ -618,7 +583,7 @@ export default function App() {
             ))}
           </div>
           <div style={styles.btnRow}>
-            <button style={styles.backBtn} onClick={() => { setS3Buffer([]); if (currentQ > 0) { setCurrentQ(currentQ - 1); } else { setScreen('step3_intro'); } }}>← 戻る</button>
+            <button style={styles.backBtn} onClick={() => { setS3Buffer([]); if (currentQ > 0) { setCurrentQ(currentQ - 1); } else { setCurrentQ(step2Questions.length - 1); setScreen('step2'); } }}>← 戻る</button>
             <button
               style={{ ...styles.nextBtn, flex: 1, ...(current.length === 0 ? styles.disabledBtn : {}) }}
               disabled={current.length === 0}
