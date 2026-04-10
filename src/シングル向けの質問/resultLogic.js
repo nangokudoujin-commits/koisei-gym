@@ -52,6 +52,8 @@ export function buildResult(judgeResult, safetyTriggers, step2Answers) {
     mapArea:      typeDef.mapArea,
     mapLabel:     typeDef.mapLabel     || typeDef.mapArea,
     mapAreaKey:   typeDef.mapAreaKey,
+    mapX:         typeDef.mapX         ?? 50,
+    mapY:         typeDef.mapY         ?? 50,
     coreText:     typeDef.coreText,
     zone,
     totalScore,

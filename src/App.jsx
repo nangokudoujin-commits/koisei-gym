@@ -5,6 +5,10 @@ import soraImg from './assets/空.png';
 import titleImg from './assets/タイトル.png';
 import bg1Img from './assets/背景1.png';
 import bg2Img from './assets/背景2.png';
+import mapImg from './assets/シングルマップ.png';
+import pinPinkImg from './assets/pin_pink.png';
+import pinBlueImg from './assets/pin_blue.png';
+import pinPurpleImg from './assets/pin_purple.png';
 import { anchorQuestions } from './シングル向けの質問/anchor';
 import { step1Questions } from './シングル向けの質問/step1';
 import { step2Questions } from './シングル向けの質問/step2';
@@ -98,64 +102,47 @@ function RadarChart({ scores }) {
   );
 }
 
-// 自爆MAPコンポーネント
-function SelfDestructMap({ mapAreaKey, mapLabel }) {
-  const areas = {
-    TOP_LEFT:     { x: 10,  y: 10,  w: 125, h: 125, color: "#ff6b6b", name: "灼熱のテーマパーク" },
-    BOTTOM_LEFT:  { x: 10,  y: 145, w: 125, h: 125, color: "#4a90d9", name: "底なしの深海沼" },
-    TOP_RIGHT:    { x: 145, y: 10,  w: 125, h: 125, color: "#74b9ff", name: "絶対零度の天空城" },
-    BOTTOM_RIGHT: { x: 145, y: 145, w: 125, h: 125, color: "#b2bec3", name: "無菌室の独房" },
-    CENTER:       { x: 110, y: 110, w: 60,  h: 60,  color: "#55efc4", name: "セキュア型" },
-    LEFT_BORDER:  { x: 10,  y: 110, w: 125, h: 60,  color: "#fd9644", name: "沸騰する水際" },
-    BLACKHOLE:    { x: 110, y: 10,  w: 60,  h: 60,  color: "#6c5ce7", name: "ブラックホール" },
-  };
+// 自爆MAPコンポーネント（画像+ピン）
+function SelfDestructMap({ mapAreaKey, mapLabel, mapX, mapY, selectedColor }) {
+  const pinImg = selectedColor === 'ブルー' ? pinBlueImg
+               : selectedColor === 'パープル' ? pinPurpleImg
+               : pinPinkImg;
 
-  const markerPos = {
-    TOP_LEFT:     { x: 72,  y: 72  },
-    BOTTOM_LEFT:  { x: 72,  y: 207 },
-    TOP_RIGHT:    { x: 207, y: 72  },
-    BOTTOM_RIGHT: { x: 207, y: 207 },
-    CENTER:       { x: 140, y: 140 },
-    LEFT_BORDER:  { x: 72,  y: 140 },
-    BLACKHOLE:    { x: 140, y: 40  },
+  const areaDesc = {
+    TOP_LEFT:     "近すぎる × 能動（求める）",
+    BOTTOM_LEFT:  "近すぎる × 受動（尽くす）",
+    TOP_RIGHT:    "遠すぎる × 能動（切る・狩る）",
+    BOTTOM_RIGHT: "遠すぎる × 受動（待つ）",
+    LEFT_BORDER:  "近い × 能動と受動の反復",
+    BLACKHOLE:    "全象限をワープ",
+    CENTER:       "どのエリアにも属さず、柔軟に動ける",
   };
-
-  const marker = markerPos[mapAreaKey] || { x: 140, y: 140 };
-  const areaInfo = areas[mapAreaKey] || areas.CENTER;
 
   return (
     <div style={{ textAlign: "center", marginBottom: "20px" }}>
       <p style={{ fontSize: "14px", fontWeight: "bold", color: "#c0304a", marginBottom: "8px" }}>🗺️ 恋の自爆MAP</p>
       <div style={{ display: "flex", justifyContent: "center" }}>
-        <svg width="280" height="280" viewBox="0 0 280 280">
-          {/* 軸ラベル */}
-          <text x="140" y="8" textAnchor="middle" fontSize="9" fill="#666">能動（求める）</text>
-          <text x="140" y="276" textAnchor="middle" fontSize="9" fill="#666">受動（待つ）</text>
-          <text x="4" y="143" textAnchor="start" fontSize="9" fill="#666">融合</text>
-          <text x="240" y="143" textAnchor="start" fontSize="9" fill="#666">防衛</text>
-          {/* エリア */}
-          {Object.entries(areas).map(([key, a]) => (
-            <rect key={key} x={a.x} y={a.y} width={a.w} height={a.h}
-              fill={a.color} opacity="0.7" rx="4"
-              stroke={mapAreaKey === key ? "#333" : "white"} strokeWidth={mapAreaKey === key ? 2 : 0.5} />
-          ))}
-          {/* エリア名テキスト */}
-          {Object.entries(areas).map(([key, a]) => (
-            <text key={key} x={a.x + a.w/2} y={a.y + a.h/2} textAnchor="middle"
-              dominantBaseline="middle" fontSize="8" fill="white" fontWeight="bold"
-              style={{ textShadow: "1px 1px 2px rgba(0,0,0,0.8)" }}>
-              {a.name.length > 8 ? a.name.slice(0, 8) : a.name}
-            </text>
-          ))}
-          {/* マーカー */}
-          <circle cx={marker.x} cy={marker.y} r="10" fill="#fff" stroke="#c0304a" strokeWidth="2" opacity="0.9" />
-          <text x={marker.x} y={marker.y} textAnchor="middle" dominantBaseline="middle" fontSize="10">📍</text>
-        </svg>
+        <div style={{ position: "relative", width: "100%", maxWidth: "320px" }}>
+          <img src={mapImg} alt="恋の自爆MAP"
+            style={{ width: "100%", height: "auto", display: "block", borderRadius: "8px" }} />
+          {/* ピン */}
+          <img src={pinImg} alt="あなたの位置"
+            style={{
+              position: "absolute",
+              left: `${mapX}%`,
+              top: `${mapY}%`,
+              width: "48px",
+              height: "auto",
+              transform: "translate(-50%, -100%)",
+              filter: "drop-shadow(2px 2px 4px rgba(0,0,0,0.5))",
+            }} />
+        </div>
       </div>
       {/* エリア説明 */}
-      <div style={{ background: "rgba(255,255,255,0.7)", border: `1px solid ${areaInfo.color}`, borderRadius: "8px", padding: "8px 12px", margin: "8px auto", maxWidth: "280px" }}>
-        <p style={{ fontSize: "0.8rem", color: "#333", margin: 0 }}>
-          📍 あなたのエリア：<strong>{mapLabel}</strong>
+      <div style={{ background: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,107,157,0.4)", borderRadius: "8px", padding: "8px 12px", margin: "8px auto", maxWidth: "320px" }}>
+        <p style={{ fontSize: "0.8rem", color: "#333", margin: 0, lineHeight: "1.7" }}>
+          📍 <strong>{mapLabel}</strong><br />
+          <span style={{ color: "#666" }}>{areaDesc[mapAreaKey] || ""}</span>
         </p>
       </div>
     </div>
@@ -203,11 +190,12 @@ function IntroScreen({ emoji, title, message, onNext, onBack }) {
 }
 
 export default function App() {
-  const [screen, setScreen]     = useState('start');
-  const [currentQ, setCurrentQ] = useState(0);
-  const [answers, setAnswers]   = useState({});
-  const [result, setResult]     = useState(null);
-  const [s3Buffer, setS3Buffer] = useState([]);
+  const [screen, setScreen]         = useState('start');
+  const [currentQ, setCurrentQ]     = useState(0);
+  const [answers, setAnswers]       = useState({});
+  const [result, setResult]         = useState(null);
+  const [s3Buffer, setS3Buffer]     = useState([]);
+  const [selectedColor, setSelectedColor] = useState('ピンク');
 
   const totalQ = anchorQuestions.length + step1Questions.length + step2Questions.length + step3Questions.length;
 
@@ -307,9 +295,50 @@ export default function App() {
         <div style={{ display: "flex", justifyContent: "center", padding: "16px 0 32px" }}>
           <button
             className="start-button"
-            onClick={() => { setCurrentQ(0); setScreen('anchor'); }}>
+            onClick={() => { setScreen('color_select'); }}>
             診断スタート
           </button>
+        </div>
+      </div>
+    );
+  }
+
+  // COLOR SELECT
+  if (screen === 'color_select') {
+    const colorOptions = [
+      { label: '🩷 ピンク',    value: 'ピンク',    bg: '#ffb7c5', border: '#e91e8c' },
+      { label: '💙 ブルー',    value: 'ブルー',    bg: '#a8d8f0', border: '#1da1f2' },
+      { label: '💜 パープル',  value: 'パープル',  bg: '#d4b8e0', border: '#9b59b6' },
+      { label: '回答しない',   value: 'ピンク',    bg: '#eee',    border: '#aaa'    },
+    ];
+    return (
+      <div style={styles.container}>
+        <div style={styles.card}>
+          <div style={styles.centerBlock}>
+            <div style={styles.bigEmoji}>
+              <img src={onibutaImg} alt="鬼豚コーチ" style={{ width: "160px", height: "160px", objectFit: "contain", mixBlendMode: "multiply" }} />
+            </div>
+            <h2 style={styles.doneTitle}>ピンの色を選んでブー！</h2>
+            <p style={{ fontSize: "13px", color: "#666", marginBottom: "20px", lineHeight: "1.7" }}>
+              MAPに表示するピンの色を選んでください。<br />性別を問う設問ではありません。
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", width: "100%" }}>
+              {colorOptions.map(opt => (
+                <button key={opt.value + opt.label}
+                  onClick={() => { setSelectedColor(opt.value); setCurrentQ(0); setScreen('anchor'); }}
+                  style={{
+                    padding: "14px", borderRadius: "10px",
+                    border: `2px solid ${opt.border}`,
+                    background: opt.bg,
+                    fontSize: "15px", fontWeight: "bold",
+                    color: "#333", cursor: "pointer",
+                  }}>
+                  {opt.label}
+                </button>
+              ))}
+            </div>
+            <button style={{ ...styles.backBtn, marginTop: "16px" }} onClick={() => setScreen('start')}>← 戻る</button>
+          </div>
         </div>
       </div>
     );
@@ -543,7 +572,7 @@ export default function App() {
           <RadarChart scores={result.scores} />
 
           {/* 自爆MAP */}
-          <SelfDestructMap mapAreaKey={result.mapAreaKey} mapLabel={result.mapLabel} />
+          <SelfDestructMap mapAreaKey={result.mapAreaKey} mapLabel={result.mapLabel} mapX={result.mapX} mapY={result.mapY} selectedColor={selectedColor} />
 
           {/* ③ 鬼豚コーチのセリフ */}
           <div style={{ ...styles.infoBox, marginBottom: "16px" }}>
@@ -611,7 +640,7 @@ export default function App() {
           </a>
 
           {/* もう一度 */}
-          <button style={{ ...styles.backBtn, width: "100%", textAlign: "center" }} onClick={() => { setScreen('start'); setCurrentQ(0); setAnswers({}); setResult(null); setS3Buffer([]); }}>
+          <button style={{ ...styles.backBtn, width: "100%", textAlign: "center" }} onClick={() => { setScreen('start'); setCurrentQ(0); setAnswers({}); setResult(null); setS3Buffer([]); setSelectedColor('ピンク'); }}>
             もう一度やり直す
           </button>
 
