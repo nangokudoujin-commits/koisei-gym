@@ -245,12 +245,11 @@ export default function App() {
   const [selectedColor, setSelectedColor] = useState('ピンク');
   const [selectedAge, setSelectedAge]     = useState(null);
 
-  // ===== デバッグモード =====
-  // VITE_DEBUG_MODE=trueまたはURLに?debug=がある場合に有効
-  const IS_DEBUG_BRANCH = import.meta.env.VITE_DEBUG_MODE === 'true' || 
-    new URLSearchParams(window.location.search).has('debug');
+  // ===== デバッグモード（開発環境のみ有効） =====
+  const IS_DEV = import.meta.env.DEV === true; // Viteの開発環境フラグ
 
   useEffect(() => {
+    if (!IS_DEV) return; // 本番環境では完全無効
     const params = new URLSearchParams(window.location.search);
     const debugType = params.get('debug');
     if (!debugType) return;
