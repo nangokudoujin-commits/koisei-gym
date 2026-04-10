@@ -37,25 +37,33 @@ export function judgeMainType(typeScores) {
   else if (totalScore >= 45) zone = "YELLOW";
   else zone = "GREEN";
 
+  // tiebreak優先順：C→F→B→G→A→D→E
+  const TIEBREAK_ORDER = ["C","F","B","G","A","D","E"];
+
   // mainType判定
   let mainType;
+  let thirdType = null; // 3位タイプ（補足表示用）
+
   if (highTypes.length === 0) {
     mainType = "SECURE";
   } else if (highTypes.length === 1) {
     mainType = highTypes[0];
   } else if (highTypes.length === 2) {
-    // アルファベット順に並べて結合
     mainType = [...highTypes].sort().join("");
   } else {
-    // 3個以上→スコア上位2タイプで複合型に丸める
-    const top2 = [...highTypes]
-      .sort((a, b) => typeScores[b] - typeScores[a])
-      .slice(0, 2)
-      .sort(); // アルファベット順
+    // 3個以上→tiebreak優先順で上位2タイプを選択
+    const sorted = [...highTypes].sort((a, b) => {
+      const scoreA = typeScores[a], scoreB = typeScores[b];
+      if (scoreB !== scoreA) return scoreB - scoreA;
+      return TIEBREAK_ORDER.indexOf(a) - TIEBREAK_ORDER.indexOf(b);
+    });
+    const top2 = sorted.slice(0, 2).sort();
     mainType = top2.join("");
+    // 3位タイプを補足用に保持
+    thirdType = sorted[2] || null;
   }
 
-  return { highTypes, mainType, totalScore, zone, scores: typeScores };
+  return { highTypes, mainType, thirdType, totalScore, zone, scores: typeScores };
 }
 
 // 【4】安全網トリガーの判定
