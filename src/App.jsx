@@ -172,16 +172,6 @@ function SelfDestructMap({ mapAreaKey, mapLabel, mapX, mapY, selectedColor }) {
         </div>
       </div>
 
-      {/* あなたのエリア */}
-      {currentArea && (
-        <div style={{ background: "rgba(255,255,255,0.8)", border: `2px solid ${currentArea.color}`, borderRadius: "8px", padding: "8px 12px", margin: "8px auto", maxWidth: "320px" }}>
-          <p style={{ fontSize: "0.85rem", color: "#333", margin: 0, lineHeight: "1.7" }}>
-            📍 <strong>{mapLabel}</strong><br />
-            <span style={{ color: "#555" }}>{currentArea.desc}</span>
-          </p>
-        </div>
-      )}
-
       {/* エリア説明一覧 */}
       <div style={{ margin: "12px auto", maxWidth: "320px", textAlign: "left" }}>
         {areaList.map(area => (
@@ -650,9 +640,6 @@ export default function App() {
                 <p style={{ fontSize: "0.85rem", color: "#333", lineHeight: "1.7", margin: 0 }}>{result.warning}</p>
               </div>
             )}
-
-            {/* ⑤ MAPエリア */}
-            <p style={{ fontSize: "13px", color: "#ff9a3c", marginBottom: "16px" }}>📍 {result.mapLabel}</p>
 
             {/* ⑥ 自爆危険度メーター */}
             <div style={{ background: "rgba(255,255,255,0.05)", border: `1px solid ${zoneColor}`, borderRadius: "10px", padding: "10px 16px", marginBottom: "20px", display: "inline-block" }}>
