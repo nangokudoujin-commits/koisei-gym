@@ -178,7 +178,7 @@ export const SINGLE_TYPES = {
     officialName: "不安×過剰適応 混合型",
     bugName: "笑顔の時限爆弾バグ",
     warning: "嫌われないよう笑顔で我慢を限界まで溜め込み、ある日突然大爆発してすべてを吹き飛ばします",
-    position: { x: 85, y: 50, z: null }
+    position: { x: 80, y: 65, z: null }
   },
 
   "BG": {
