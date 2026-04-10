@@ -196,6 +196,7 @@ export default function App() {
   const [result, setResult]         = useState(null);
   const [s3Buffer, setS3Buffer]     = useState([]);
   const [selectedColor, setSelectedColor] = useState('ピンク');
+  const [selectedAge, setSelectedAge]     = useState(null);
 
   const totalQ = anchorQuestions.length + step1Questions.length + step2Questions.length + step3Questions.length;
 
@@ -303,13 +304,13 @@ export default function App() {
     );
   }
 
-  // COLOR SELECT
+  // COLOR SELECT（性別選択）
   if (screen === 'color_select') {
     const colorOptions = [
-      { label: '🩷 ピンク',    value: 'ピンク',    bg: '#ffb7c5', border: '#e91e8c' },
-      { label: '💙 ブルー',    value: 'ブルー',    bg: '#a8d8f0', border: '#1da1f2' },
-      { label: '💜 パープル',  value: 'パープル',  bg: '#d4b8e0', border: '#9b59b6' },
-      { label: '回答しない',   value: 'ピンク',    bg: '#eee',    border: '#aaa'    },
+      { label: '女性',           value: 'ピンク',  bg: '#fff0f5', border: '#e91e8c' },
+      { label: '男性',           value: 'ブルー',  bg: '#f0f7ff', border: '#1da1f2' },
+      { label: 'ノンバイナリー', value: 'パープル',bg: '#f5f0ff', border: '#9b59b6' },
+      { label: 'その他・回答しない', value: 'なし', bg: '#f5f5f5', border: '#aaa'  },
     ];
     return (
       <div style={styles.container}>
@@ -318,14 +319,11 @@ export default function App() {
             <div style={styles.bigEmoji}>
               <img src={onibutaImg} alt="鬼豚コーチ" style={{ width: "160px", height: "160px", objectFit: "contain", mixBlendMode: "multiply" }} />
             </div>
-            <h2 style={styles.doneTitle}>ピンの色を選んでブー！</h2>
-            <p style={{ fontSize: "13px", color: "#666", marginBottom: "20px", lineHeight: "1.7" }}>
-              MAPに表示するピンの色を選んでください。<br />性別を問う設問ではありません。
-            </p>
-            <div style={{ display: "flex", flexDirection: "column", gap: "10px", width: "100%" }}>
+            <h2 style={styles.doneTitle}>性別を教えてブー！</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", width: "100%", marginTop: "16px" }}>
               {colorOptions.map(opt => (
-                <button key={opt.value + opt.label}
-                  onClick={() => { setSelectedColor(opt.value); setCurrentQ(0); setScreen('anchor'); }}
+                <button key={opt.label}
+                  onClick={() => { setSelectedColor(opt.value); setScreen('age_select'); }}
                   style={{
                     padding: "14px", borderRadius: "10px",
                     border: `2px solid ${opt.border}`,
@@ -338,6 +336,45 @@ export default function App() {
               ))}
             </div>
             <button style={{ ...styles.backBtn, marginTop: "16px" }} onClick={() => setScreen('start')}>← 戻る</button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // AGE SELECT（年代選択）
+  if (screen === 'age_select') {
+    const ageOptions = [
+      '10代', '20代', '30代', '40代', '50代', '60代以上', '回答しない'
+    ];
+    return (
+      <div style={styles.container}>
+        <div style={styles.card}>
+          <div style={styles.centerBlock}>
+            <div style={styles.bigEmoji}>
+              <img src={onibutaImg} alt="鬼豚コーチ" style={{ width: "160px", height: "160px", objectFit: "contain", mixBlendMode: "multiply" }} />
+            </div>
+            <h2 style={styles.doneTitle}>年代を教えてブー！</h2>
+            <div style={{ display: "flex", flexDirection: "column", gap: "10px", width: "100%", marginTop: "16px" }}>
+              {ageOptions.map(age => (
+                <button key={age}
+                  onClick={() => {
+                    setSelectedAge(age === '回答しない' ? null : age);
+                    setCurrentQ(0);
+                    setScreen('anchor');
+                  }}
+                  style={{
+                    padding: "14px", borderRadius: "10px",
+                    border: "2px solid rgba(255,107,157,0.5)",
+                    background: "rgba(255,255,255,0.9)",
+                    fontSize: "15px", fontWeight: "bold",
+                    color: "#333", cursor: "pointer",
+                  }}>
+                  {age}
+                </button>
+              ))}
+            </div>
+            <button style={{ ...styles.backBtn, marginTop: "16px" }} onClick={() => setScreen('color_select')}>← 戻る</button>
           </div>
         </div>
       </div>
@@ -571,8 +608,10 @@ export default function App() {
           {/* レーダーチャート */}
           <RadarChart scores={result.scores} />
 
-          {/* 自爆MAP */}
-          <SelfDestructMap mapAreaKey={result.mapAreaKey} mapLabel={result.mapLabel} mapX={result.mapX} mapY={result.mapY} selectedColor={selectedColor} />
+          {/* 自爆MAP（回答しない場合は非表示） */}
+          {selectedColor !== 'なし' && (
+            <SelfDestructMap mapAreaKey={result.mapAreaKey} mapLabel={result.mapLabel} mapX={result.mapX} mapY={result.mapY} selectedColor={selectedColor} />
+          )}
 
           {/* ③ 鬼豚コーチのセリフ */}
           <div style={{ ...styles.infoBox, marginBottom: "16px" }}>
@@ -640,7 +679,7 @@ export default function App() {
           </a>
 
           {/* もう一度 */}
-          <button style={{ ...styles.backBtn, width: "100%", textAlign: "center" }} onClick={() => { setScreen('start'); setCurrentQ(0); setAnswers({}); setResult(null); setS3Buffer([]); setSelectedColor('ピンク'); }}>
+          <button style={{ ...styles.backBtn, width: "100%", textAlign: "center" }} onClick={() => { setScreen('start'); setCurrentQ(0); setAnswers({}); setResult(null); setS3Buffer([]); setSelectedColor('ピンク'); setSelectedAge(null); }}>
             もう一度やり直す
           </button>
 
