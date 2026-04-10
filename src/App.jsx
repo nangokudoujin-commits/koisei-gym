@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './App.css';
 import onibutaImg from './assets/onibuta.png';
 import soraImg from './assets/空.png';
@@ -244,6 +244,35 @@ export default function App() {
   const [s3Buffer, setS3Buffer]     = useState([]);
   const [selectedColor, setSelectedColor] = useState('ピンク');
   const [selectedAge, setSelectedAge]     = useState(null);
+
+  // ===== デバッグモード（debugブランチのみ有効） =====
+  const IS_DEBUG_BRANCH = import.meta.env.VITE_DEBUG_MODE === 'true';
+
+  useEffect(() => {
+    if (!IS_DEBUG_BRANCH) return;
+    const params = new URLSearchParams(window.location.search);
+    const debugType = params.get('debug');
+    if (!debugType) return;
+
+    const validTypes = ['A','B','C','D','E','F','G','AB','AD','AE','BC','BE','BG','CG','DG','CF','FG','SECURE'];
+    const typeMap = { 'EB': 'BE', 'FC': 'CF' };
+    const normalizedType = typeMap[debugType.toUpperCase()] || debugType.toUpperCase();
+    if (!validTypes.includes(normalizedType)) return;
+
+    const types = ['A','B','C','D','E','F','G'];
+    const fakeScores = {};
+    types.forEach(t => { fakeScores[t] = 3; });
+
+    if (normalizedType !== 'SECURE') {
+      normalizedType.split('').filter(c => types.includes(c)).forEach(t => { fakeScores[t] = 15; });
+    }
+
+    const judgeResult    = judgeMainType(fakeScores);
+    const safetyTriggers = getSafetyTriggers(fakeScores, {}, {});
+    const res            = buildResult(judgeResult, safetyTriggers, { S2Q1: 'A', S2Q2: 'A', S2Q3: 'A' });
+    setResult(res);
+    setScreen('result');
+  }, []);
 
   const totalQ = anchorQuestions.length + step1Questions.length + step2Questions.length + step3Questions.length;
 
