@@ -5,7 +5,6 @@ import soraImg from './assets/空.png';
 import titleImg from './assets/タイトル.png';
 import bg1Img from './assets/背景1.png';
 import bg2Img from './assets/背景2.png';
-import mapImg from './assets/シングルマップ.png';
 import pinPinkImg from './assets/pin_pink.png';
 import pinBlueImg from './assets/pin_blue.png';
 import pinPurpleImg from './assets/pin_purple.png';
@@ -108,29 +107,63 @@ function SelfDestructMap({ mapAreaKey, mapLabel, mapX, mapY, selectedColor }) {
                : selectedColor === 'パープル' ? pinPurpleImg
                : pinPinkImg;
 
-  const areaDesc = {
-    TOP_LEFT:     "近すぎる × 能動（求める）",
-    BOTTOM_LEFT:  "近すぎる × 受動（尽くす）",
-    TOP_RIGHT:    "遠すぎる × 能動（切る・狩る）",
-    BOTTOM_RIGHT: "遠すぎる × 受動（待つ）",
-    LEFT_BORDER:  "近い × 能動と受動の反復",
-    BLACKHOLE:    "全象限をワープ",
-    CENTER:       "どのエリアにも属さず、柔軟に動ける",
-  };
+  // SVGプロット範囲からピン座標を計算
+  const pinLeft = ((65 + (mapX / 100) * 370) / 500 * 100).toFixed(2) + "%";
+  const pinTop  = ((70 + (mapY / 100) * 370) / 500 * 100).toFixed(2) + "%";
+
+  const areaList = [
+    { key: "TOP_RIGHT",   color: "#bde0f0", name: "絶対零度の天空城",   desc: "傷つく前に距離を取り、理想に合うかを厳しく見極める傾向" },
+    { key: "TOP_LEFT",    color: "#f5b8a0", name: "灼熱のテーマパーク", desc: "つながりを強く求め、熱量で関係を動かしすぎる傾向" },
+    { key: "BOTTOM_RIGHT",color: "#c8c8c8", name: "無菌室の独房",       desc: "深く関わる前に閉じて、ひとりで安全を保とうとする傾向" },
+    { key: "BOTTOM_LEFT", color: "#8fc8b0", name: "底なしの深海沼",     desc: "相手に合わせすぎて、自分の気持ちや境界を見失いやすい傾向" },
+    { key: "CENTER",      color: "#b8e0c8", name: "セキュア型",         desc: "近づく・離れるを、相手や状況に応じて柔軟に選べる傾向" },
+    { key: "BLACKHOLE",   color: "#c8a8e8", name: "ブラックホール",     desc: "つながりたいのに怖くなり、近づいては離れるループに入りやすい状態" },
+    { key: "LEFT_BORDER", color: "#f5c888", name: "沸騰する水際",       desc: "嫌われたくなくて合わせ続け、限界で感情があふれやすい状態" },
+  ];
+
+  const currentArea = areaList.find(a => a.key === mapAreaKey);
 
   return (
     <div style={{ textAlign: "center", marginBottom: "20px" }}>
       <p style={{ fontSize: "14px", fontWeight: "bold", color: "#c0304a", marginBottom: "8px" }}>🗺️ 恋の自爆MAP</p>
+
+      {/* MAP本体 */}
       <div style={{ display: "flex", justifyContent: "center" }}>
         <div style={{ position: "relative", width: "100%", maxWidth: "320px" }}>
-          <img src={mapImg} alt="恋の自爆MAP"
-            style={{ width: "100%", height: "auto", display: "block", borderRadius: "8px" }} />
+          {/* SVG背景 */}
+          <svg viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg" style={{ width: "100%", height: "auto", display: "block" }}>
+            <defs>
+              <clipPath id="cc5">
+                <circle cx="250" cy="255" r="185"/>
+              </clipPath>
+            </defs>
+            <rect x="65" y="70" width="185" height="185" fill="#bde0f0" fillOpacity="0.45" clipPath="url(#cc5)"/>
+            <rect x="250" y="70" width="185" height="185" fill="#f5b8a0" fillOpacity="0.45" clipPath="url(#cc5)"/>
+            <rect x="65" y="255" width="185" height="185" fill="#c8c8c8" fillOpacity="0.38" clipPath="url(#cc5)"/>
+            <rect x="250" y="255" width="185" height="185" fill="#8fc8b0" fillOpacity="0.42" clipPath="url(#cc5)"/>
+            <circle cx="250" cy="255" r="185" fill="none" stroke="#999" strokeWidth="1" strokeOpacity="0.5"/>
+            <circle cx="250" cy="255" r="93" fill="none" stroke="#aaa" strokeWidth="0.5" strokeOpacity="0.3" strokeDasharray="4,4"/>
+            <circle cx="250" cy="255" r="139" fill="none" stroke="#aaa" strokeWidth="0.5" strokeOpacity="0.3" strokeDasharray="4,4"/>
+            <line x1="65" y1="255" x2="435" y2="255" stroke="#666" strokeWidth="1" strokeOpacity="0.7"/>
+            <line x1="250" y1="70" x2="250" y2="440" stroke="#666" strokeWidth="1" strokeOpacity="0.7"/>
+            <circle cx="250" cy="255" r="50" fill="#b8e0c8" fillOpacity="0.85"/>
+            <circle cx="250" cy="255" r="50" fill="none" stroke="#5a9e78" strokeWidth="1" strokeOpacity="0.6"/>
+            <circle cx="250" cy="71" r="21" fill="#c8a8e8" fillOpacity="0.75"/>
+            <circle cx="250" cy="71" r="21" fill="none" stroke="#8855cc" strokeWidth="1.2"/>
+            <text x="250" y="44" textAnchor="middle" fontSize="12" fill="#333" fontWeight="500">自発的</text>
+            <text x="250" y="468" textAnchor="middle" fontSize="12" fill="#333" fontWeight="500">受動的</text>
+            <text x="53" y="259" textAnchor="end" fontSize="11" fill="#333">回避傾向</text>
+            <text x="447" y="259" textAnchor="start" fontSize="11" fill="#333">不安傾向</text>
+            <circle cx="410" cy="368" r="21" fill="#f5c888" fillOpacity="0.75"/>
+            <circle cx="410" cy="368" r="21" fill="none" stroke="#d4860a" strokeWidth="1.2"/>
+          </svg>
+
           {/* ピン */}
           <img src={pinImg} alt="あなたの位置"
             style={{
               position: "absolute",
-              left: `${mapX}%`,
-              top: `${mapY}%`,
+              left: pinLeft,
+              top: pinTop,
               width: "48px",
               height: "auto",
               transform: "translate(-50%, -100%)",
@@ -138,12 +171,36 @@ function SelfDestructMap({ mapAreaKey, mapLabel, mapX, mapY, selectedColor }) {
             }} />
         </div>
       </div>
-      {/* エリア説明 */}
-      <div style={{ background: "rgba(255,255,255,0.7)", border: "1px solid rgba(255,107,157,0.4)", borderRadius: "8px", padding: "8px 12px", margin: "8px auto", maxWidth: "320px" }}>
-        <p style={{ fontSize: "0.8rem", color: "#333", margin: 0, lineHeight: "1.7" }}>
-          📍 <strong>{mapLabel}</strong><br />
-          <span style={{ color: "#666" }}>{areaDesc[mapAreaKey] || ""}</span>
-        </p>
+
+      {/* あなたのエリア */}
+      {currentArea && (
+        <div style={{ background: "rgba(255,255,255,0.8)", border: `2px solid ${currentArea.color}`, borderRadius: "8px", padding: "8px 12px", margin: "8px auto", maxWidth: "320px" }}>
+          <p style={{ fontSize: "0.85rem", color: "#333", margin: 0, lineHeight: "1.7" }}>
+            📍 <strong>{mapLabel}</strong><br />
+            <span style={{ color: "#555" }}>{currentArea.desc}</span>
+          </p>
+        </div>
+      )}
+
+      {/* エリア説明一覧 */}
+      <div style={{ margin: "12px auto", maxWidth: "320px", textAlign: "left" }}>
+        {areaList.map(area => (
+          <div key={area.key} style={{
+            display: "flex", alignItems: "flex-start", gap: "8px",
+            marginBottom: "8px",
+            opacity: mapAreaKey === area.key ? 1 : 0.65,
+          }}>
+            <span style={{
+              width: "12px", height: "12px", borderRadius: "50%",
+              background: area.color, flexShrink: 0, marginTop: "3px",
+              border: "1px solid rgba(0,0,0,0.15)",
+            }} />
+            <p style={{ fontSize: "0.78rem", color: "#333", margin: 0, lineHeight: "1.6" }}>
+              <strong>{area.name}</strong><br />
+              {area.desc}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

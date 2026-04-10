@@ -17,7 +17,7 @@ export const SINGLE_TYPES = {
     officialName: "回避傾向",
     bugName: "シャッターバグ",
     warning: "接近警報で作動中。親密になろうとこじ開けるのは厳禁です",
-    mapX: 75,
+    mapX: 25,
     mapY: 75
   },
 
@@ -34,7 +34,7 @@ export const SINGLE_TYPES = {
     officialName: "不安傾向",
     bugName: "遭難アラートバグ",
     warning: "電波良好でも、少しの態度の変化で「見捨てられアラート」が鳴り響きます",
-    mapX: 25,
+    mapX: 75,
     mapY: 25
   },
 
@@ -51,7 +51,7 @@ export const SINGLE_TYPES = {
     officialName: "過剰適応傾向",
     bugName: "カメレオンバグ",
     warning: "波風を恐れて笑顔で背景と同化中。自我のステルス化（消失）に注意",
-    mapX: 30,
+    mapX: 70,
     mapY: 70
   },
 
@@ -68,7 +68,7 @@ export const SINGLE_TYPES = {
     officialName: "刺激希求傾向",
     bugName: "ジェットコースターバグ",
     warning: "安定＝退屈。平和なメリーゴーランドに乗せ続けると発作が起きます",
-    mapX: 70,
+    mapX: 30,
     mapY: 25
   },
 
@@ -85,7 +85,7 @@ export const SINGLE_TYPES = {
     officialName: "完璧主義傾向",
     bugName: "減点チェッカーバグ",
     warning: "初期値100点。1点の汚れを見つけた瞬間、全リセットの暴挙に出ます",
-    mapX: 70,
+    mapX: 30,
     mapY: 30
   },
 
@@ -102,7 +102,7 @@ export const SINGLE_TYPES = {
     officialName: "救済者傾向",
     bugName: "ナイチンゲールバグ",
     warning: "愛情と使命感を完全に誤認中。尽くしすぎによる過労死に注意",
-    mapX: 35,
+    mapX: 65,
     mapY: 70
   },
 
@@ -119,7 +119,7 @@ export const SINGLE_TYPES = {
     officialName: "融合傾向",
     bugName: "スライムバグ",
     warning: "自他の境界線がドロドロに溶融中。相手の単独行動を極度に恐れます",
-    mapX: 25,
+    mapX: 75,
     mapY: 50
   },
 
@@ -154,7 +154,7 @@ export const SINGLE_TYPES = {
     officialName: "回避×刺激 混合型",
     bugName: "途中下車のジェットコースターバグ",
     warning: "スリルは満喫しますが、本気の親密さに到達する直前で安全バーを外して逃げます",
-    mapX: 72,
+    mapX: 28,
     mapY: 22
   },
 
@@ -171,7 +171,7 @@ export const SINGLE_TYPES = {
     officialName: "回避×完璧主義 混合型",
     bugName: "ガラスの城の夜逃げバグ",
     warning: "理想の城に少しでもヒビが入ると、傷つく前にすべてを捨てて深夜に失踪します",
-    mapX: 75,
+    mapX: 25,
     mapY: 25
   },
 
@@ -188,7 +188,7 @@ export const SINGLE_TYPES = {
     officialName: "不安×過剰適応 混合型",
     bugName: "笑顔の時限爆弾バグ",
     warning: "嫌われないよう笑顔で我慢を限界まで溜め込み、ある日突然大爆発してすべてを吹き飛ばします",
-    mapX: 15,
+    mapX: 85,
     mapY: 50
   },
 
@@ -205,7 +205,7 @@ export const SINGLE_TYPES = {
     officialName: "不安×融合 混合型",
     bugName: "顔なし憑依バグ",
     warning: "見捨てられる恐怖から相手に丸ごと飲み込まれ、自分自身の顔（アイデンティティ）を失います",
-    mapX: 22,
+    mapX: 78,
     mapY: 25
   },
 
@@ -222,7 +222,7 @@ export const SINGLE_TYPES = {
     officialName: "過剰適応×融合 混合型",
     bugName: "自我メルトダウンバグ",
     warning: "合わせながら相手に溶け込んだ結果、自分という存在が跡形もなくメルトダウンします",
-    mapX: 28,
+    mapX: 72,
     mapY: 72
   },
 
@@ -239,7 +239,7 @@ export const SINGLE_TYPES = {
     officialName: "刺激希求×融合 混合型",
     bugName: "人間キャンプファイヤーバグ",
     warning: "着火から完全一体化までは最高潮ですが、一瞬で燃え尽きて焼け野原の焦土と化します",
-    mapX: 28,
+    mapX: 72,
     mapY: 28
   },
 
@@ -256,7 +256,7 @@ export const SINGLE_TYPES = {
     officialName: "完璧主義×不安 混合型",
     bugName: "愛の踏み絵チェッカーバグ",
     warning: "高すぎる理想を押し付け、少しでも外れると「私を愛してないのね！」と悲劇の裁判を始めます",
-    mapX: 65,
+    mapX: 35,
     mapY: 28
   },
 
@@ -273,7 +273,7 @@ export const SINGLE_TYPES = {
     officialName: "救済者×過剰適応 混合型",
     bugName: "自己犠牲バッテリーバグ",
     warning: "文句一つ言わずダメな相手の養分になり続け、放っておくと完全に充電が尽きます",
-    mapX: 32,
+    mapX: 68,
     mapY: 68
   },
 
@@ -290,7 +290,7 @@ export const SINGLE_TYPES = {
     officialName: "救済者×融合 混合型",
     bugName: "泥船の同乗者バグ",
     warning: "相手を救うつもりが境界線を見失い、仲良く一緒に泥船で底なし沼へ沈んでいきます",
-    mapX: 30,
+    mapX: 70,
     mapY: 72
   },
 
@@ -327,22 +327,22 @@ export const SINGLE_TYPES = {
 };
 
 export const MAP_AREAS = {
-  TOP_LEFT: {
+  TOP_RIGHT: {
     name: "灼熱のテーマパーク",
     axis: "近すぎる × 能動（求める）",
     core: "相手を強烈に求め、愛を確かめるために自分から激しく動く"
   },
-  BOTTOM_LEFT: {
+  BOTTOM_RIGHT: {
     name: "底なしの深海沼",
     axis: "近すぎる × 受動（尽くす）",
     core: "相手にべったりだが、自分からは要求せず耐えて自分を消す"
   },
-  TOP_RIGHT: {
+  TOP_LEFT: {
     name: "絶対零度の天空城",
     axis: "遠すぎる × 能動（切る・狩る）",
     core: "相手を自分の城に入れない。刺激だけを求めるか、能動的に切り捨てる"
   },
-  BOTTOM_RIGHT: {
+  BOTTOM_LEFT: {
     name: "無菌室の独房",
     axis: "遠すぎる × 受動（待つ）",
     core: "傷つくのが怖くて、自分から動かず、ただ嵐が過ぎるのを待つ"
