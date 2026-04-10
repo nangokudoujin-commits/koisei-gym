@@ -102,21 +102,21 @@ function RadarChart({ scores }) {
 }
 
 // 自爆MAPコンポーネント（画像+ピン）
-function SelfDestructMap({ mapAreaKey, mapLabel, mapX, mapY, selectedColor }) {
+function SelfDestructMap({ mapAreaKey, mapLabel, position, selectedColor }) {
   const pinImg = selectedColor === 'ブルー' ? pinBlueImg
                : selectedColor === 'パープル' ? pinPurpleImg
                : pinPinkImg;
 
   // SVGプロット範囲からピン座標を計算
-  const pinLeft = ((65 + (mapX / 100) * 370) / 500 * 100).toFixed(2) + "%";
-  const pinTop  = ((70 + (mapY / 100) * 370) / 500 * 100).toFixed(2) + "%";
+  const pinLeft = ((65 + (position.x / 100) * 370) / 500 * 100).toFixed(2) + "%";
+  const pinTop  = ((70 + (position.y / 100) * 370) / 500 * 100).toFixed(2) + "%";
 
   const areaList = [
     { key: "TOP_RIGHT",   color: "#bde0f0", name: "絶対零度の天空城",   desc: "傷つく前に距離を取り、理想に合うかを厳しく見極める傾向" },
     { key: "TOP_LEFT",    color: "#f5b8a0", name: "灼熱のテーマパーク", desc: "つながりを強く求め、熱量で関係を動かしすぎる傾向" },
     { key: "BOTTOM_RIGHT",color: "#c8c8c8", name: "無菌室の独房",       desc: "深く関わる前に閉じて、ひとりで安全を保とうとする傾向" },
     { key: "BOTTOM_LEFT", color: "#8fc8b0", name: "底なしの深海沼",     desc: "相手に合わせすぎて、自分の気持ちや境界を見失いやすい傾向" },
-    { key: "CENTER",      color: "#b8e0c8", name: "セキュア型",         desc: "近づく・離れるを、相手や状況に応じて柔軟に選べる傾向" },
+    { key: "CENTER",      color: "#c8e86e", name: "セキュア型",         desc: "近づく・離れるを、相手や状況に応じて柔軟に選べる傾向" },
     { key: "BLACKHOLE",   color: "#c8a8e8", name: "ブラックホール",     desc: "つながりたいのに怖くなり、近づいては離れるループに入りやすい状態" },
     { key: "LEFT_BORDER", color: "#f5c888", name: "沸騰する水際",       desc: "嫌われたくなくて合わせ続け、限界で感情があふれやすい状態" },
   ];
@@ -146,8 +146,8 @@ function SelfDestructMap({ mapAreaKey, mapLabel, mapX, mapY, selectedColor }) {
             <circle cx="250" cy="255" r="139" fill="none" stroke="#aaa" strokeWidth="0.5" strokeOpacity="0.3" strokeDasharray="4,4"/>
             <line x1="65" y1="255" x2="435" y2="255" stroke="#666" strokeWidth="1" strokeOpacity="0.7"/>
             <line x1="250" y1="70" x2="250" y2="440" stroke="#666" strokeWidth="1" strokeOpacity="0.7"/>
-            <circle cx="250" cy="255" r="50" fill="#b8e0c8" fillOpacity="0.85"/>
-            <circle cx="250" cy="255" r="50" fill="none" stroke="#5a9e78" strokeWidth="1" strokeOpacity="0.6"/>
+            <circle cx="250" cy="255" r="50" fill="#c8e86e" fillOpacity="0.85"/>
+            <circle cx="250" cy="255" r="50" fill="none" stroke="#8aaa20" strokeWidth="1" strokeOpacity="0.6"/>
             <circle cx="250" cy="71" r="21" fill="#c8a8e8" fillOpacity="0.75"/>
             <circle cx="250" cy="71" r="21" fill="none" stroke="#8855cc" strokeWidth="1.2"/>
             <text x="250" y="44" textAnchor="middle" fontSize="12" fill="#333" fontWeight="500">自発的</text>
@@ -245,11 +245,12 @@ export default function App() {
   const [selectedColor, setSelectedColor] = useState('ピンク');
   const [selectedAge, setSelectedAge]     = useState(null);
 
-  // ===== デバッグモード（debugブランチのみ有効） =====
-  const IS_DEBUG_BRANCH = import.meta.env.VITE_DEBUG_MODE === 'true';
+  // ===== デバッグモード =====
+  // VITE_DEBUG_MODE=trueまたはURLに?debug=がある場合に有効
+  const IS_DEBUG_BRANCH = import.meta.env.VITE_DEBUG_MODE === 'true' || 
+    new URLSearchParams(window.location.search).has('debug');
 
   useEffect(() => {
-    if (!IS_DEBUG_BRANCH) return;
     const params = new URLSearchParams(window.location.search);
     const debugType = params.get('debug');
     if (!debugType) return;
@@ -683,7 +684,7 @@ export default function App() {
 
           {/* 自爆MAP（回答しない場合は非表示） */}
           {selectedColor !== 'なし' && (
-            <SelfDestructMap mapAreaKey={result.mapAreaKey} mapLabel={result.mapLabel} mapX={result.mapX} mapY={result.mapY} selectedColor={selectedColor} />
+            <SelfDestructMap mapAreaKey={result.mapAreaKey} mapLabel={result.mapLabel} position={result.position} selectedColor={selectedColor} />
           )}
 
           {/* ③ 鬼豚コーチのセリフ */}
