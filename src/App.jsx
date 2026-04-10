@@ -149,9 +149,9 @@ function SelfDestructMap({ mapAreaKey, mapLabel, position, selectedColor }) {
             {/* セキュア型（中央緑円） */}
             <circle cx="250" cy="255" r="50" fill="#c8e86e" fillOpacity="0.85"/>
             <circle cx="250" cy="255" r="50" fill="none" stroke="#8aaa20" strokeWidth="1" strokeOpacity="0.6"/>
-            {/* ブラックホール（中央・セキュア型の上に重ねる） */}
-            <circle cx="250" cy="255" r="21" fill="#c8a8e8" fillOpacity="0.75"/>
-            <circle cx="250" cy="255" r="21" fill="none" stroke="#8855cc" strokeWidth="1.2"/>
+            {/* ブラックホール（x:50,y:10 → svgX=250, svgY=107・12時方向） */}
+            <circle cx="250" cy="107" r="21" fill="#c8a8e8" fillOpacity="0.75"/>
+            <circle cx="250" cy="107" r="21" fill="none" stroke="#8855cc" strokeWidth="1.2"/>
             {/* 沸騰する水際（x:80,y:65 → svgX=361, svgY=310） */}
             <circle cx="361" cy="310" r="21" fill="#f5c888" fillOpacity="0.75"/>
             <circle cx="361" cy="310" r="21" fill="none" stroke="#d4860a" strokeWidth="1.2"/>

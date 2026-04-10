@@ -130,7 +130,8 @@ export const SINGLE_TYPES = {
     officialName: "回避×不安 混合型",
     bugName: "密室のパニックバグ",
     warning: "自らバリケードを築きながら、大声で救助を呼ぶ大矛盾が発生しています",
-    position: { x: 50, y: 50, z: null }
+    // 特殊状態エリア：平均座標を使わず固定座標（12時方向の縁）
+    position: { x: 50, y: 10, z: null }
   },
 
   "AD": {
