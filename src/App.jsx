@@ -146,16 +146,20 @@ function SelfDestructMap({ mapAreaKey, mapLabel, position, selectedColor }) {
             <circle cx="250" cy="255" r="139" fill="none" stroke="#aaa" strokeWidth="0.5" strokeOpacity="0.3" strokeDasharray="4,4"/>
             <line x1="65" y1="255" x2="435" y2="255" stroke="#666" strokeWidth="1" strokeOpacity="0.7"/>
             <line x1="250" y1="70" x2="250" y2="440" stroke="#666" strokeWidth="1" strokeOpacity="0.7"/>
+            {/* セキュア型（中央緑円） */}
             <circle cx="250" cy="255" r="50" fill="#c8e86e" fillOpacity="0.85"/>
             <circle cx="250" cy="255" r="50" fill="none" stroke="#8aaa20" strokeWidth="1" strokeOpacity="0.6"/>
-            <circle cx="250" cy="71" r="21" fill="#c8a8e8" fillOpacity="0.75"/>
-            <circle cx="250" cy="71" r="21" fill="none" stroke="#8855cc" strokeWidth="1.2"/>
+            {/* ブラックホール（中央・セキュア型の上に重ねる） */}
+            <circle cx="250" cy="255" r="21" fill="#c8a8e8" fillOpacity="0.75"/>
+            <circle cx="250" cy="255" r="21" fill="none" stroke="#8855cc" strokeWidth="1.2"/>
+            {/* 沸騰する水際（x:80,y:65 → svgX=361, svgY=310） */}
+            <circle cx="361" cy="310" r="21" fill="#f5c888" fillOpacity="0.75"/>
+            <circle cx="361" cy="310" r="21" fill="none" stroke="#d4860a" strokeWidth="1.2"/>
+            {/* 軸ラベル */}
             <text x="250" y="44" textAnchor="middle" fontSize="12" fill="#333" fontWeight="500">自発的</text>
             <text x="250" y="468" textAnchor="middle" fontSize="12" fill="#333" fontWeight="500">受動的</text>
             <text x="53" y="259" textAnchor="end" fontSize="11" fill="#333">回避傾向</text>
             <text x="447" y="259" textAnchor="start" fontSize="11" fill="#333">不安傾向</text>
-            <circle cx="410" cy="368" r="21" fill="#f5c888" fillOpacity="0.75"/>
-            <circle cx="410" cy="368" r="21" fill="none" stroke="#d4860a" strokeWidth="1.2"/>
           </svg>
 
           {/* ピン */}
