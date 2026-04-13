@@ -306,7 +306,76 @@ export const SINGLE_TYPES = {
     coachAccept: "",
     coachCut: "",
     coachAction: ""
-  }
+  },
+
+  // ===== 隠しタイプ（特殊判定） =====
+  "OVERHEAT": {
+    name: "複合過負荷型",
+    nickname: "全回路オーバーヒート",
+    officialName: "複合過負荷型",
+    bugName: "全回路オーバーヒートバグ",
+    warning: "複数のバグが同時に作動している状態です",
+    mapArea: "MAP中央",
+    mapLabel: "MAP中央",
+    mapAreaKey: "CENTER",
+    coreText: "複数の恋クセが同時に最大出力で作動中",
+    coachAccept: "",
+    coachCut: "",
+    coachAction: "",
+    position: { x: 50, y: 50, z: null },
+    isSpecialType: true,
+  },
+
+  "FULLSHIELD": {
+    name: "低反応型",
+    nickname: "フルシールドモード",
+    officialName: "低反応型",
+    bugName: "フルシールドバグ",
+    warning: "自分の気持ちに向き合う準備ができていない可能性があります",
+    mapArea: "MAP中央",
+    mapLabel: "MAP中央",
+    mapAreaKey: "CENTER",
+    coreText: "感情の出入口が全部閉じている状態",
+    coachAccept: "",
+    coachCut: "",
+    coachAction: "",
+    position: { x: 50, y: 50, z: null },
+    isSpecialType: true,
+  },
+
+  "BLUR": {
+    name: "輪郭未確定型",
+    nickname: "輪郭ぼかしモード",
+    officialName: "輪郭未確定型",
+    bugName: "輪郭ぼかしバグ",
+    warning: "本音の輪郭がまだぼやけている状態かもしれません",
+    mapArea: "MAP中央",
+    mapLabel: "MAP中央",
+    mapAreaKey: "CENTER",
+    coreText: "自分の恋クセがまだはっきり見えていない状態",
+    coachAccept: "",
+    coachCut: "",
+    coachAction: "",
+    position: { x: 50, y: 50, z: null },
+    isSpecialType: true,
+  },
+
+  "PARADOX": {
+    name: "逆方向同時作動型",
+    nickname: "矛盾ショート",
+    officialName: "逆方向同時作動型",
+    bugName: "矛盾ショートバグ",
+    warning: "複数の矛盾した傾向が同時に働いている状態です",
+    mapArea: "MAP中央",
+    mapLabel: "MAP中央",
+    mapAreaKey: "CENTER",
+    coreText: "相反する恋クセが同時に作動してショートしている",
+    coachAccept: "",
+    coachCut: "",
+    coachAction: "",
+    position: { x: 50, y: 50, z: null },
+    isSpecialType: true,
+  },
 };
 
 export const MAP_AREAS = {

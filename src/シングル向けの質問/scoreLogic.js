@@ -40,6 +40,41 @@ export function judgeMainType(typeScores) {
   // tiebreak優先順：C→F→B→G→A→D→E
   const TIEBREAK_ORDER = ["C","F","B","G","A","D","E"];
 
+  // ===== 隠しタイプ判定（通常判定より優先） =====
+
+  // ① 全回路オーバーヒート：HIGHが5個以上
+  if (highTypes.length >= 5) {
+    return { highTypes, mainType: "OVERHEAT", thirdType: null, totalScore, zone, scores: typeScores };
+  }
+
+  // ② フルシールドモード：HIGHが0 かつ 総合スコアが30点以下
+  if (highTypes.length === 0 && totalScore <= 30) {
+    return { highTypes, mainType: "FULLSHIELD", thirdType: null, totalScore, zone, scores: typeScores };
+  }
+
+  // ③ 輪郭ぼかしモード：HIGHが0 かつ（LOWが0 または 総合スコアが31〜49点）
+  if (highTypes.length === 0) {
+    const lowTypes = types.filter(t => getTypeLevel(typeScores[t]) === "LOW");
+    if (lowTypes.length === 0 || (totalScore >= 31 && totalScore <= 49)) {
+      return { highTypes, mainType: "BLUR", thirdType: null, totalScore, zone, scores: typeScores };
+    }
+  }
+
+  // ④ 矛盾ショート：矛盾ペアが2ペア以上同時成立
+  const paradoxPairs = [
+    ["A", "B"],
+    ["A", "G"],
+    ["C", "E"],
+  ];
+  const activePairs = paradoxPairs.filter(
+    ([a, b]) => getTypeLevel(typeScores[a]) === "HIGH" && getTypeLevel(typeScores[b]) === "HIGH"
+  );
+  if (activePairs.length >= 2) {
+    return { highTypes, mainType: "PARADOX", thirdType: null, totalScore, zone, scores: typeScores };
+  }
+
+  // ===== 通常タイプ判定 =====
+
   // mainType判定
   let mainType;
   let thirdType = null; // 3位タイプ（補足表示用）
