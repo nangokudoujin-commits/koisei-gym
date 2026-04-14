@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import './App.css';
+import { CONSULTATION_URL, SPECIAL_TYPE_IDS } from './constants';
 import onibutaImg from './assets/onibuta.png';
 import soraImg from './assets/空.png';
 import titleImg from './assets/タイトル.png';
@@ -725,15 +726,14 @@ export default function App() {
             もう一度やり直す
           </button>
 
-          {/* REDゾーン時ホットライン */}
-          {result.zone === 'RED' && (
-            <div style={{ marginTop: "20px", padding: "14px 16px", background: "rgba(255,68,68,0.1)", border: "1px solid rgba(255,68,68,0.3)", borderRadius: "10px", textAlign: "center" }}>
-              <p style={{ fontSize: "13px", color: "#ffaaaa", lineHeight: "1.9" }}>
-                今日だけは自分を責めるなブー。<br />
-                一人で抱えすぎていると感じたら<br />
-                <strong>よりそいホットライン：0120-279-338（24時間無料）</strong>
-              </p>
-            </div>
+          {/* 相談窓口ボタン（REDゾーンまたは隠しタイプの場合に表示） */}
+          {(result.zone === 'RED' || SPECIAL_TYPE_IDS.includes(result.mainType)) && (
+            <a href={CONSULTATION_URL} target="_blank" rel="noopener noreferrer"
+              style={{ display: "block", textDecoration: "none", marginTop: "16px", marginBottom: "4px" }}>
+              <button style={{ ...styles.primaryBtn, background: "linear-gradient(90deg, #e74c3c, #c0392b)" }}>
+                公的な相談窓口を見る
+              </button>
+            </a>
           )}
 
           {/* 免責文 */}
